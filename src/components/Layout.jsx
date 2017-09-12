@@ -12,7 +12,14 @@ import SelectResult from './Controls/SelectResult';
 import SelectVegobjekttype2 from './Controls/SelectVegobjekttype2';
 import StartFetching from './Controls/StartFetching';
 
+import getSettings from './../services/settings';
+
 const Layout = ({routeParams}) => {
+
+
+    const settings = getSettings(routeParams);
+    console.log(settings);
+
     return (
         <div>
             <section className="setup">
@@ -29,8 +36,8 @@ const Layout = ({routeParams}) => {
             </section>
             <section className="report">
                 <table>
-                    <ResultTableCaption routeParams={routeParams} />
-                    <ResultTableHeader routeParams={routeParams} />
+                    <ResultTableCaption settings={settings} />
+                    <ResultTableHeader routeParams={routeParams} settings={settings} />
                     <ResultTableRows routeParams={routeParams} />
                 </table>
             </section>

@@ -72,8 +72,6 @@ class IntervalInput extends Component {
 
     render() {
 
-    	console.log('horse');
-
     	return (
 
             <input 

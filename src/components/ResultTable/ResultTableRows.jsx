@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import ResultTableRow from './ResultTableRow';
 
-let ResultTableRows = ({rowValues, subrowValues, columnValues, routeParams}) => {
+function ResultTableRows ({rowValues, subrowValues, columnValues, routeParams}) {
 
     let rows = []
     rowValues.items.forEach(function(item, index) {
@@ -34,5 +34,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-ResultTableRows = connect(mapStateToProps)(ResultTableRows);
-export default ResultTableRows;
+export default connect(mapStateToProps)(ResultTableRows);

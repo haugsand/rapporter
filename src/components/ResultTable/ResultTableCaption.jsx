@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-class ResultTableCaption extends Component {
+function ResultTableCaption ({settings, vegobjekttyper}) {
 
-    render() {
+    const today = new Date();
+    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
-        let vegobjekttype = '';
-        if (this.props.vegobjekttyper.items[this.props.routeParams.vegobjekttype]) {
-            vegobjekttype = this.props.vegobjekttyper.items[this.props.routeParams.vegobjekttype].navn;
-        }
-
-        return (
-            <caption>
-                Vegobjekttype: {vegobjekttype}<br />
-                Dato: {date}
-            </caption>
-        );
+    let vegobjekttype = '';
+    if (vegobjekttyper.items[settings.vegobjekttype]) {
+        vegobjekttype = vegobjekttyper.items[settings.vegobjekttype].navn;
     }
+
+    return (
+        <caption>
+            Vegobjekttype: {vegobjekttype}<br />
+            Dato: {date}
+        </caption>
+    );
 }
 
 const mapStateToProps = (state) => ({
@@ -27,5 +24,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-ResultTableCaption = connect(mapStateToProps)(ResultTableCaption);
-export default ResultTableCaption;
+export default connect(mapStateToProps)(ResultTableCaption);

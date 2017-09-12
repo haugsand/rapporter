@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { getRoute } from './../../services/getRoute';
 
 
-const ResultTableRowTitle = ({item, routeParams, subrow}) => {
+function ResultTableRowTitle ({item, routeParams, subrow}) {
 
     if (item) {
 

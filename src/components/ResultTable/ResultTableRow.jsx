@@ -5,7 +5,7 @@ import ResultTableCell from './ResultTableCell';
 import ResultTableRowTitle from './ResultTableRowTitle';
 
 
-const ResultTableRow = ({item, routeParams, subrow, columnValues}) => {
+function ResultTableRow ({item, routeParams, subrow, columnValues}) {
 
     let rowValue = '';
     if (item) {
@@ -16,14 +16,14 @@ const ResultTableRow = ({item, routeParams, subrow, columnValues}) => {
 
 
     columnValues.forEach((columnValue, index) => {
-        let parameters = buildParametersAll(routeParams, rowValue, columnValue.id, subrow);
+        const parameters = buildParametersAll(routeParams, rowValue, columnValue.id, subrow);
 
         tableCells.push(<ResultTableCell key={index} parameters={parameters} resultParam={routeParams.result} />);
 
     });
 
 
-    let sumParameter = buildParametersAll(routeParams, rowValue, '', subrow);
+    const sumParameter = buildParametersAll(routeParams, rowValue, '', subrow);
     tableCells.push(<ResultTableCell key="sum" parameters={sumParameter} resultParam={routeParams.result} />);
 
     return (

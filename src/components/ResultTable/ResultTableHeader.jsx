@@ -7,14 +7,12 @@ import SelectRow from './../Controls/SelectRow';
 import { getRoute } from './../../services/getRoute';
 import { sortColumn } from './../../services/sortValues';
 
+
 class ResultTableHeader extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            sortedColumn: '',
-            direction: ''
-        }
+    state = {
+        sortedColumn: '',
+        direction: ''
     }
 
     componentWillReceiveProps (nextProps) {
@@ -50,22 +48,29 @@ class ResultTableHeader extends Component {
 
     render() {
 
-        let columnValues = this.props.columnValues;
-        let colspan = columnValues.length + 1;
+
+        const {
+            columnValues,
+            routeParams,
+            settings
+        } = this.props;
+
+
+        const colspan = columnValues.length + 1;
+
 
         let removeRowFilter = '';
+        if (settings.hasRowfilter) {
+            let newRow = settings.row;
 
-        if (this.props.routeParams.row.split('-')[0].split(':').length === 2) {
-            let newRow = this.props.routeParams.row.split('-')[0].split(':')[0];
+            if (settings.hasSubrow) {
+                newRow += '-' + settings.subrow;
+            } 
 
-            if (this.props.routeParams.row.split('-')[1]) {
-                newRow += '-' + this.props.routeParams.row.split('-')[1];
-            }
-
-            let newRoute = getRoute(this.props.routeParams, 'row', newRow);
-
+            const newRoute = getRoute(routeParams, 'row', newRow);
             removeRowFilter = <Link to={newRoute}>Vis alle</Link>;
         }
+
 
         let columnHeaders = [];
         columnValues.forEach((value, index) => {
@@ -126,12 +131,12 @@ class ResultTableHeader extends Component {
                         {removeRowFilter}
                     </th>
                     <th colSpan={colspan}>
-                        <SelectColumn routeParams={this.props.routeParams} />
+                        <SelectColumn routeParams={routeParams} settings={settings} />
                     </th>
                 </tr>
                 <tr>
                     <th>
-                        <SelectRow routeParams={this.props.routeParams} />
+                        <SelectRow routeParams={routeParams} />
                     </th>
                     {columnHeaders}
                 </tr>
