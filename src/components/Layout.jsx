@@ -19,11 +19,11 @@ const Layout = ({routeParams}) => {
                 <SelectVegobjekttype2 routeParams={routeParams} />
                 <EgenskapsFilterForm routeParams={routeParams} />
                 <OverlappFilter routeParams={routeParams} />
-                <section className="filters">
-                	<FilterList routeParams={routeParams} />
-                </section>
             </section>
-            <section>
+            <section className="filters">
+            	<FilterList routeParams={routeParams} />
+            </section>
+            <section className="tools">
                 <StartFetching routeParams={routeParams} />
                 <SelectResult routeParams={routeParams} />
             </section>

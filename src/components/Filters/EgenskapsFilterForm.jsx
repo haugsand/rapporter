@@ -300,29 +300,34 @@ class EgenskapsFilterForm extends Component {
 
         return (
 
-            <div>
-                <select 
-                    value={this.state.selectedEgenskapstype} 
-                    onChange={(e) => { this.handleChangeEgenskapstype(e.target.value, egenskapstyper) }}
-                >
-                    <option value={0}>Velg egenskapstype</option>
-                    {egenskapstyper.map((egenskapstype, index) =>
-                        <option key={index} value={egenskapstype.id}>
-                            {egenskapstype.navn}
-                        </option>
-                    )}
-                </select>
+            <dl className="filters__filter">
+                <dt className="filters__filter-label">
+                    Filtrer etter egenskap <b>(valgfritt)</b>
+                </dt>
+                <dd className="filters__filter-input">
+                    <select 
+                        value={this.state.selectedEgenskapstype} 
+                        onChange={(e) => { this.handleChangeEgenskapstype(e.target.value, egenskapstyper) }}
+                    >
+                        <option value={0}>Velg egenskapstype</option>
+                        {egenskapstyper.map((egenskapstype, index) =>
+                            <option key={index} value={egenskapstype.id}>
+                                {egenskapstype.navn}
+                            </option>
+                        )}
+                    </select>
 
-                <br />
+                    <br />
 
-                {selectOperator}
-                {selectVerdi}
+                    {selectOperator}
+                    {selectVerdi}
 
-                <br />
+                    <br />
 
-                {addFilter}
+                    {addFilter}
+                </dd>
 
-            </div>
+            </dl>
 
         )
     }

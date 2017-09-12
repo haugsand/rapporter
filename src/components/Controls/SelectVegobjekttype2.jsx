@@ -153,25 +153,30 @@ class SelectVegobjekttype2 extends Component {
 
         return (
 
-            <div className="filters__filter">
-                <input 
-                    type="text" 
-                    className="filters__searchinput" 
-                    placeholder="Søk etter vegobjekttype"
-                    value={this.state.query} 
-                    onChange={(e) => { this.handleChangeQuery(e.target.value) }} 
-                    onKeyDown={(e) => { this.handleKeyDown(e) }} 
-                    onBlur={() => { this.getDefaultState() }} 
-                    ref={node => this.searchField = node}
-                />
+            <dl className="filters__filter">
+                <dt className="filters__filter-label">
+                    Velg datagrunnlag
+                </dt>
+                <dd className="filters__filter-input">
+                    <input 
+                        type="text" 
+                        className="filters__searchinput" 
+                        placeholder="Søk etter vegobjekttype"
+                        value={this.state.query} 
+                        onChange={(e) => { this.handleChangeQuery(e.target.value) }} 
+                        onKeyDown={(e) => { this.handleKeyDown(e) }} 
+                        onBlur={() => { this.getDefaultState() }} 
+                        ref={node => this.searchField = node}
+                    />
 
-                {this.state.query ? <button onClick={() => { this.clearQuery() }} >x</button> : '' }
+                    {this.state.query ? <button onClick={() => { this.clearQuery() }} >x</button> : '' }
+                    
+                    <ul className="filters__resultlist">
+                        {searchResult}
+                    </ul>
+                </dd>
 
-
-                <ul className="filters__resultlist">
-                    {searchResult}
-                </ul>
-            </div>
+            </dl>
 
         )
     }

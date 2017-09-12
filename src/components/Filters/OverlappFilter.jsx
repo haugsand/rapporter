@@ -210,20 +210,25 @@ class OverlappFilter extends Component {
 
         return (
 
-            <div className="filters__filter">
-                <input 
-                    type="text" 
-                    className="filters__searchinput" 
-                    placeholder="Overlappfilter"
-                    value={this.state.query} 
-                    onChange={(e) => { this.handleChangeQuery(e.target.value) }} 
-                    onKeyDown={(e) => { this.handleKeyDown(e) }} 
-                    onBlur={() => { this.getDefaultState() }} 
-                />
-                <ul className="filters__resultlist">
-                    {searchResult}
-                </ul>
-            </div>
+            <dl className="filters__filter">
+                <dt className="filters__filter-label">
+                    Begrens søkeområdet <b>(valgfritt)</b>
+                </dt>
+                <dd className="filters__filter-input">
+                    <input 
+                        type="text" 
+                        className="filters__searchinput" 
+                        placeholder="Overlappfilter"
+                        value={this.state.query} 
+                        onChange={(e) => { this.handleChangeQuery(e.target.value) }} 
+                        onKeyDown={(e) => { this.handleKeyDown(e) }} 
+                        onBlur={() => { this.getDefaultState() }} 
+                    />
+                    <ul className="filters__resultlist">
+                        {searchResult}
+                    </ul>
+                </dd>
+            </dl>
 
         )
     }

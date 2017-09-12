@@ -82,6 +82,8 @@ class StartFetching extends Component {
         }
 
         if (this.props.result.isFetching) {
+            document.querySelector('body').style.cursor = 'progress';
+
             return (
                 <span className="report-progress">
                     <span className="report-progress__background" style={{width: progress}}></span>
@@ -89,6 +91,8 @@ class StartFetching extends Component {
                 </span>
             );
         } else {
+            document.querySelector('body').style.cursor = 'auto';
+
             return (
                 <button 
                     className="start-button"
