@@ -16,7 +16,7 @@ import getSettings from './../services/settings';
 
 const Layout = ({routeParams}) => {
 
-
+    console.log(routeParams);
     const settings = getSettings(routeParams);
     console.log(settings);
 
@@ -38,7 +38,7 @@ const Layout = ({routeParams}) => {
                 <table>
                     <ResultTableCaption settings={settings} />
                     <ResultTableHeader routeParams={routeParams} settings={settings} />
-                    <ResultTableRows routeParams={routeParams} />
+                    <ResultTableRows routeParams={routeParams} settings={settings} />
                 </table>
             </section>
         </div>

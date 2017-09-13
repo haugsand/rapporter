@@ -33,8 +33,7 @@ class IntervalInput extends Component {
         });
 
         let valuesString = values.join(',');
-        let egenskapstypeId = this.props.routeParams.column.split(':')[1].split(';')[0];
-        let columnValue = 'egenskapstype:' + egenskapstypeId + ';' + valuesString;
+        let columnValue = 'egenskapstype:' + this.props.settings.columnEgenskapstype + ';' + valuesString;
 
         let newRoute = getRoute(this.props.routeParams, 'column', columnValue);
         browserHistory.push(newRoute);
@@ -43,10 +42,10 @@ class IntervalInput extends Component {
 
 
     componentWillMount () {
-        if (this.props.routeParams.column.split(';').length > 1) {
-            let intervalValue = this.props.routeParams.column.split(';')[1].split(',').join(' ');
+
+        if (this.props.settings.hasColumnInterval) {
             this.setState({
-                intervalValue: intervalValue
+                intervalValue: this.props.settings.columnInterval
             });   
         } else {
             this.setState({
@@ -55,7 +54,12 @@ class IntervalInput extends Component {
         }
     }
 
+    /*
+
+    Hva gjør denne`Trengs den?
+
     componentWillReceiveProps (nextProps) {
+        console.log('WillReceiveProps');
         if (nextProps.routeParams.column.split(';').length > 1) {
             let intervalValue = nextProps.routeParams.column.split(';')[1].split(',').join(' ');
             this.setState({
@@ -67,6 +71,7 @@ class IntervalInput extends Component {
             });         
         }
     }
+    */
 
   
 

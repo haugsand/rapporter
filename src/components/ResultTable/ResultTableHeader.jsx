@@ -136,7 +136,7 @@ class ResultTableHeader extends Component {
                 </tr>
                 <tr>
                     <th>
-                        <SelectRow routeParams={routeParams} />
+                        <SelectRow routeParams={routeParams} settings={settings} />
                     </th>
                     {columnHeaders}
                 </tr>

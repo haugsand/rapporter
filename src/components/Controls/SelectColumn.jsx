@@ -30,7 +30,7 @@ function SelectColumn({egenskapstyper, routeParams, settings}) {
             if (item.id === settings.columnEgenskapstype) {
                 if (item.datatype === 2) {
 
-                    intervalInput = <IntervalInput routeParams={routeParams} />;
+                    intervalInput = <IntervalInput routeParams={routeParams} settings={settings} />;
 
                 }
             }

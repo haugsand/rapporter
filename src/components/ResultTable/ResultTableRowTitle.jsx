@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { getRoute } from './../../services/getRoute';
 
 
-function ResultTableRowTitle ({item, routeParams, subrow}) {
+function ResultTableRowTitle ({item, routeParams, subrow, settings}) {
 
     if (item) {
 
@@ -11,8 +11,7 @@ function ResultTableRowTitle ({item, routeParams, subrow}) {
             return <td className="subrow_title" key="title">{item.navn}</td>;
 
         } else {
-            const row = routeParams.row.split('-')[0].split(':')[0];
-            const newRoute = getRoute(routeParams, 'row', row + ':' + item.nummer);
+            const newRoute = getRoute(routeParams, 'row', settings.row + ':' + item.nummer);
 
             return <td className="row_title" key="title"><Link to={newRoute}>{item.navn}</Link></td>;
         }

@@ -1,7 +1,5 @@
 export default function getSettings (routeParams) {
 
-	console.log(routeParams);
-
 	let settings = {};
 
 	settings = {
