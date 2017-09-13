@@ -92,6 +92,10 @@ class EgenskapsFilterForm extends Component {
             newValue = verdi;
         }
 
+        if (this.state.selectedEgenskapstypeData.datatype === 1) {
+            newValue = '\'' + newValue + '\'';
+        } 
+
         let newOperator = this.state.selectedOperator;
         if (operator) {
             newOperator = operator;

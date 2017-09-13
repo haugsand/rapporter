@@ -16,8 +16,8 @@ import getSettings from './../services/settings';
 
 const Layout = ({routeParams}) => {
 
-    console.log(routeParams);
     const settings = getSettings(routeParams);
+    console.log(routeParams);
     console.log(settings);
 
     return (

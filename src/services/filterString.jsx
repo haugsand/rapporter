@@ -31,7 +31,7 @@ export function filterStringToList(filterString) {
             filter: parseInt(array[1], 10) + array[2] + array[3].slice(1, -1),
             egenskapstype: parseInt(array[1], 10),
             operator: array[2],
-            verdi: array[3].slice(1, -1)
+            verdi: array[3]
         }); 
     })
 
@@ -47,9 +47,9 @@ export function makeFilterString(activeFilters) {
     activeFilters.forEach(filter => {
         let key = filter.egenskapstype + filter.operator;
         if (!activeFiltersObject.hasOwnProperty(key)) {
-            activeFiltersObject[key] = [key + '\'' + filter.verdi + '\''];
+            activeFiltersObject[key] = [key + filter.verdi];
         } else {
-            activeFiltersObject[key].push(key + '\'' + filter.verdi + '\'');
+            activeFiltersObject[key].push(key + filter.verdi);
         }
     })
 

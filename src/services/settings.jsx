@@ -13,6 +13,7 @@ export default function getSettings (routeParams) {
 		rowfilter: '',
 
 		column: routeParams.column.split(';')[0],
+		columnType: routeParams.column.split(':')[0],
 		hasColumnEgenskapstype: false,
 		columnEgenskapstype: '',
 		hasColumnInterval: false,

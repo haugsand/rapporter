@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// TODO: Move to own file
 function formatNumber (number) {
 	return number.toLocaleString();
 }

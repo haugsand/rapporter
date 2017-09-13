@@ -17,11 +17,11 @@ function ResultTableRows ({rowValues, subrowValues, columnValues, routeParams, s
             }
         }
     });
-    rows.push(<ResultTableRow routeParams={routeParams} key='sum' columnValues={columnValues} settings={settings} />);
 
     return (
         <tbody>
             {rows}
+            <ResultTableRow routeParams={routeParams} key='sum' columnValues={columnValues} settings={settings} />
         </tbody>
     );
 
