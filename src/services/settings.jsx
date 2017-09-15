@@ -1,6 +1,5 @@
 
 function parseEgenskapFilterString (egenskapFilterString) {
-    console.log(egenskapFilterString);
 
     const REGEX = /([0-9]+)(=|!=|<|>|<=|>=)(.+)/;
 
@@ -81,6 +80,7 @@ export default function getSettings (routeParams) {
         hasColumnEgenskapstype: false,
         hasColumnInterval: false,
         hasEgenskapFilter: false,
+        hasFilter: false,
         hasFylkeFilter: false,
         hasKommuneFilter: false,
         hasOverlappFilter: false,
@@ -118,6 +118,10 @@ export default function getSettings (routeParams) {
     if (column.split(';').length > 1) {
         settings.hasColumnInterval = true;
         settings.columnInterval = column.split(';')[1].split(',');
+    }
+
+    if (Object.keys(query).length > 0) {
+        settings.hasFilter = true;
     }
 
     Object.keys(query).forEach(parameter => {

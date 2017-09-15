@@ -1,64 +1,47 @@
 import React from 'react';
 
-import { getOverlappFilters, getAreaFilters, getVegreferanseFilters, getEgenskapFilterString } from './../../services/routeParamsTools';
-import { filterStringToList } from './../../services/filterString';
-
 import EgenskapsFilterItem from './EgenskapsFilterItem';
 import OverlappFilterItem from './OverlappFilterItem';
 import AreaFilterItem from './AreaFilterItem';
 import VegreferanseFilterItem from './VegreferanseFilterItem';
 
 
-const FilterList = ({routeParams}) => {
+function FilterList ({routeParams, settings}) {
 
-    let filters = []
+    const {
+        egenskapFilter,
+        overlappFilter,
+        regionFilter,
+        fylkeFilter,
+        kommuneFilter,
+        vegreferanseFilter
+    } = settings;
 
-    const egenskapsFilterString = getEgenskapFilterString(routeParams.query);
-    const activeFilters = filterStringToList(egenskapsFilterString);
-    activeFilters.forEach(filter => {
-        filters.push(
-            <EgenskapsFilterItem
-                key={filter.filter}
-                filter={filter}
-                routeParams={routeParams}
-            />
-        );
+
+    let filters = [];
+
+    egenskapFilter.forEach(filter => {
+        filters.push(<EgenskapsFilterItem key={filter.filterString} filter={filter} routeParams={routeParams} />);
     });
 
-
-
-    const overlappFilters = getOverlappFilters(routeParams.query);
-    overlappFilters.forEach((value, index) => {
-        filters.push(
-            <OverlappFilterItem 
-                key={value}
-                value={value}
-                routeParams={routeParams}
-            />
-        );
+    overlappFilter.forEach(filter => {
+        filters.push(<OverlappFilterItem key={filter.filterString} value={filter.filterString} filter={filter} routeParams={routeParams} />);
     });
 
-    const areaFilters = getAreaFilters(routeParams.query);
-    areaFilters.forEach(value => {
-        filters.push(
-            <AreaFilterItem 
-                key={value.type+value.id}
-                type={value.type}
-                id={value.id}
-                routeParams={routeParams}
-            />
-        );
+    regionFilter.forEach(filter => {
+        filters.push(<AreaFilterItem key={'region' + filter} type={'region'} id={filter} routeParams={routeParams} />);
     });
 
-    const vegreferanseFilters = getVegreferanseFilters(routeParams.query);
-    vegreferanseFilters.forEach(value => {
-        filters.push(
-            <VegreferanseFilterItem 
-                key={value}
-                vegreferanse={value}
-                routeParams={routeParams}
-            />
-        );
+    fylkeFilter.forEach(filter => {
+        filters.push(<AreaFilterItem key={'fylke' + filter} type={'fylke'} id={filter} routeParams={routeParams} />);
+    });
+
+    kommuneFilter.forEach(filter => {
+        filters.push(<AreaFilterItem key={'kommune' + filter} type={'kommune'} id={filter} routeParams={routeParams} />);
+    });
+
+    vegreferanseFilter.forEach(filter => {
+        filters.push(<VegreferanseFilterItem key={filter} vegreferanse={filter} routeParams={routeParams} />);
     });
 
     // https://medium.com/@joethedave/achieving-ui-animations-with-react-the-right-way-562fa8a91935#.6fwwubqe2

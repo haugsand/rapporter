@@ -13,12 +13,14 @@ import SelectVegobjekttype2 from './Controls/SelectVegobjekttype2';
 import StartFetching from './Controls/StartFetching';
 
 import getSettings from './../services/settings';
+import makeRoute from './../services/makeRoute';
 
 const Layout = ({routeParams}) => {
 
     const settings = getSettings(routeParams);
     console.log(routeParams);
     console.log(settings);
+    console.log(makeRoute(settings));
 
     return (
         <div>
@@ -28,11 +30,11 @@ const Layout = ({routeParams}) => {
                 <OverlappFilter routeParams={routeParams} />
             </section>
             <section className="filters">
-            	<FilterList routeParams={routeParams} />
+            	<FilterList routeParams={routeParams} settings={settings} />
             </section>
             <section className="tools">
                 <StartFetching routeParams={routeParams} />
-                <SelectResult routeParams={routeParams} />
+                <SelectResult settings={settings} />
             </section>
             <section className="report">
                 <table>

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { getRoute } from './../../services/getRoute';
+
+import makeRoute from './../../services/makeRoute';
+import { setRowFilter } from './../../services/editSettings';
 
 
-function ResultTableRowTitle ({item, routeParams, subrow, settings}) {
+function ResultTableRowTitle ({item, subrow, settings}) {
 
     if (item) {
 
@@ -11,7 +13,9 @@ function ResultTableRowTitle ({item, routeParams, subrow, settings}) {
             return <td className="subrow_title" key="title">{item.navn}</td>;
 
         } else {
-            const newRoute = getRoute(routeParams, 'row', settings.row + ':' + item.nummer);
+
+            const newSettings = setRowFilter(settings, item.nummer);
+            const newRoute = makeRoute(newSettings);
 
             return <td className="row_title" key="title"><Link to={newRoute}>{item.navn}</Link></td>;
         }

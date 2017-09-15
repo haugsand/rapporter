@@ -1,33 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { getRoute } from './../../services/getRoute';
 
-class SelectResult extends Component {
+import makeRoute from './../../services/makeRoute';
+import { setResult } from './../../services/editSettings';
 
-    handleChangeResult (value) {
-        let newRoute = getRoute(this.props.routeParams, 'result', value);
+function SelectResult ({settings, vegobjekttyper}) {
+
+    const handleChangeResult = (e) => {
+        const newSettings = setResult(settings, e.target.value);
+        const newRoute = makeRoute(newSettings);
         browserHistory.push(newRoute);
     }
 
-
-    render() {
-
-        let disabled = false;
-        if(this.props.vegobjekttyper.hasOwnProperty(this.props.routeParams.vegobjekttype)) {
-            if (this.props.vegobjekttyper[this.props.routeParams.vegobjekttype].stedfesting !== 'LINJE') {
-                disabled = true;
-            }
+    let disabled = false;
+    if(vegobjekttyper.hasOwnProperty(settings.vegobjekttype)) {
+        if (vegobjekttyper[settings.vegobjekttype].stedfesting !== 'LINJE') {
+            disabled = true;
         }
-
-
-        return (
-            <select value={this.props.routeParams.result}  onChange={(e) => { this.handleChangeResult(e.target.value) }}>
-                <option value="antall">Antall</option>
-                <option value="strekningslengde" disabled={disabled}>Lengde</option>
-            </select>
-        );
     }
+
+    return (
+        <select value={settings.result} onChange={handleChangeResult} >
+            <option value="antall">Antall</option>
+            <option value="strekningslengde" disabled={disabled}>Lengde</option>
+        </select>
+    );
 }
 
 const mapStateToProps = (state) => ({
@@ -35,6 +33,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-SelectResult = connect(mapStateToProps)(SelectResult);
-
-export default SelectResult;
+export default connect(mapStateToProps)(SelectResult);

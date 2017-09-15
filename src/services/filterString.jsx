@@ -28,7 +28,7 @@ export function filterStringToList(filterString) {
         let array = REGEX.exec(string);
 
         activeFilters.push({
-            filter: parseInt(array[1], 10) + array[2] + array[3].slice(1, -1),
+            filter: parseInt(array[1], 10) + array[2] + array[3],
             egenskapstype: parseInt(array[1], 10),
             operator: array[2],
             verdi: array[3]

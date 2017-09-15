@@ -6,6 +6,11 @@ export function getRoute(routeParams, param, value) {
     if (param === 'updateOverlapp') {
         let oldQuery = routeParams.query;
 
+        console.log('test');
+        console.log(value);
+
+        value = value + '';
+
         let vegobjekttypeId = value.split('(')[0];
 
         let updateIndex = 0;
@@ -75,7 +80,9 @@ export function getRoute(routeParams, param, value) {
                 delete oldQuery[key];
             } else {
                 let newValues = oldValues.filter(item => {
-                    return item !== keyValue;
+                    //console.log(item);
+                    //console.log(keyValue);
+                    return item != keyValue;
                 });
                 oldQuery[key] = newValues.join(',');
             }

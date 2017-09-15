@@ -22,7 +22,7 @@ function ResultTableRow ({item, routeParams, subrow, columnValues, settings}) {
 
     return (
         <tr>
-            <ResultTableRowTitle routeParams={routeParams} item={item} subrow={subrow} settings={settings} />
+            <ResultTableRowTitle item={item} subrow={subrow} settings={settings} />
             {tableCells}
             {tableCellSum}
         </tr>

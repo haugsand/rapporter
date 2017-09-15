@@ -10,17 +10,24 @@ import { getRoute } from './../../services/getRoute';
 
 const removeEgenskapsFilter = (removedFilter, routeParams, overlapp) => {
 
+    console.log('start');
+    console.log(removedFilter);
+    console.log(routeParams);
+    console.log(overlapp);
+    console.log('slutt');
+
     let filterString = '';
     if (overlapp) {
         filterString = getOverlappFilterString(routeParams.query.overlapp, overlapp);
     } else {
         filterString = getEgenskapFilterString(routeParams.query);
     }
+    console.log(filterString);
     const activeFilters = filterStringToList(filterString);
 
 
     let filteredActiveFilters = activeFilters.filter(item => {
-        return item.filter !== removedFilter;
+        return item.filter != removedFilter;
     });
 
     let newRoute = '';
@@ -84,7 +91,7 @@ let EgenskapsFilterItem = ({routeParams, filter, egenskapstyperAll, overlapp}) =
             {navn} {filter.operator} {verdi}
             <button 
                 className="filters__removebutton"
-                onClick={() => { removeEgenskapsFilter(filter.filter, routeParams, overlapp) }}>
+                onClick={() => { removeEgenskapsFilter(filter.filterString, routeParams, overlapp) }}>
                 x
             </button>
     	</li>

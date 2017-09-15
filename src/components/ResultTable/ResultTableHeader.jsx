@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import SelectColumn from './../Controls/SelectColumn';
 import SelectRow from './../Controls/SelectRow';
 
-import { getRoute } from './../../services/getRoute';
+import makeRoute from './../../services/makeRoute';
+import { removeRowFilter } from './../../services/editSettings';
 import { sortColumn } from './../../services/sortValues';
 
 
@@ -59,16 +60,13 @@ class ResultTableHeader extends Component {
         const colspan = columnValues.length + 1;
 
 
-        let removeRowFilter = '';
-        if (settings.hasRowfilter) {
-            let newRow = settings.row;
+        let removeRowFilterLink = '';
+        if (settings.hasRowFilter) {
 
-            if (settings.hasSubrow) {
-                newRow += '-' + settings.subrow;
-            } 
+            const newSettings = removeRowFilter(settings);
+            const newRoute = makeRoute(newSettings);
 
-            const newRoute = getRoute(routeParams, 'row', newRow);
-            removeRowFilter = <Link to={newRoute}>Vis alle</Link>;
+            removeRowFilterLink = <Link to={newRoute}>Vis alle</Link>;
         }
 
 
@@ -128,7 +126,7 @@ class ResultTableHeader extends Component {
             <thead>
                 <tr>
                     <th>
-                        {removeRowFilter}
+                        {removeRowFilterLink}
                     </th>
                     <th colSpan={colspan}>
                         <SelectColumn routeParams={routeParams} settings={settings} />

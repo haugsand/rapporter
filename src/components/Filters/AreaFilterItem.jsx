@@ -7,7 +7,10 @@ import { getRow } from './../../services/routeParamsTools';
 
 
 const removeAreaFilter = (type, id, routeParams) => {
+    console.log(type + ' ' + id);
+    console.log(routeParams);
     const newRoute = getRoute(routeParams, 'removeQuery', {[type]: id});
+    console.log(newRoute);
     browserHistory.push(newRoute);
 }
 
