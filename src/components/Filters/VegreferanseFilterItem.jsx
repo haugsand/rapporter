@@ -1,30 +1,36 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import { getRoute } from './../../services/getRoute';
-import { getRow } from './../../services/routeParamsTools';
-
-const removeVegreferanseFilter = (vegreferanse, routeParams) => {
-    const newRoute = getRoute(routeParams, 'removeQuery', {'vegreferanse': vegreferanse});
-    browserHistory.push(newRoute);
-}
+import makeRoute from './../../services/makeRoute';
+import { removeVegreferanseFilter } from './../../services/editSettings';
 
 
-const VegreferanseFilterItem = ({vegreferanse, routeParams}) => {
+function VegreferanseFilterItem ({vegreferanse, settings}) {
 
-    const row = getRow(routeParams.row);
+    const removeFilter = (e) => {
+        const newSettings = removeVegreferanseFilter(settings, e.target.dataset.vegreferanse);
+        const newRoute = makeRoute(newSettings);
+        browserHistory.push(newRoute);
+    }
 
-    let warning = '';
-    if (row === 'vegkategori') {
-        warning = '(!)';
+    let showWarning = false;
+    if (settings.row === 'vegkategori') {
+        showWarning = true;
     } 
 
     return (
     	<li className="filters__filterlistitem">
-    		{vegreferanse} (vegreferanse) {warning}
+    		{vegreferanse} (vegreferanse) 
+
+            {showWarning && <span>(!)</span>}
+
             <button 
                 className="filters__removebutton"
-                onClick={() => { removeVegreferanseFilter(vegreferanse, routeParams) }}>x</button>
+                data-vegreferanse={vegreferanse} 
+                onClick={removeFilter}
+            >
+                x
+            </button>
     	</li>
     )
 

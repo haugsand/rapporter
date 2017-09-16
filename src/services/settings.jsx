@@ -46,7 +46,6 @@ function parseOverlappQueryString (overlappQueryString) {
         overlappFilter.push({
             hasEgenskapFilter: hasEgenskapFilter,
             egenskapFilter: egenskapFilter,
-            filterString: filter,
             vegobjekttype: vegobjekttype
         });
 

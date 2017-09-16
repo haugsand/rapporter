@@ -2,64 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { filterStringToList, makeFilterString } from './../../services/filterString';
-import { getOverlappFilterString, getEgenskapFilterString } from './../../services/routeParamsTools';
-
-import { getRoute } from './../../services/getRoute';
+import makeRoute from './../../services/makeRoute';
+import { removeEgenskapFilter, removeOverlappEgenskapFilter } from './../../services/editSettings';
 
 
-const removeEgenskapsFilter = (removedFilter, routeParams, overlapp) => {
+function EgenskapsFilterItem ({filter, egenskapstyperAll, overlapp, settings}) {
 
-    console.log('start');
-    console.log(removedFilter);
-    console.log(routeParams);
-    console.log(overlapp);
-    console.log('slutt');
-
-    let filterString = '';
-    if (overlapp) {
-        filterString = getOverlappFilterString(routeParams.query.overlapp, overlapp);
-    } else {
-        filterString = getEgenskapFilterString(routeParams.query);
-    }
-    console.log(filterString);
-    const activeFilters = filterStringToList(filterString);
-
-
-    let filteredActiveFilters = activeFilters.filter(item => {
-        return item.filter != removedFilter;
-    });
-
-    let newRoute = '';
-
-    if (filteredActiveFilters.length > 0) {
-        const filter = makeFilterString(filteredActiveFilters);
+    const removeEgenskapsFilter = (e) => {
+        let newSettings = {};
 
         if (overlapp) {
-            newRoute = getRoute(routeParams, 'updateOverlapp', overlapp + '(' + filter + ')');
+            newSettings = removeOverlappEgenskapFilter(settings, overlapp, e.target.dataset.filter);
         } else {
-            newRoute = getRoute(routeParams, 'addQuery', {'egenskap': '"' + filter + '"'});
+            newSettings = removeEgenskapFilter(settings, e.target.dataset.filter);
         }
 
-    } else {
-        if (overlapp) {
-            newRoute = getRoute(routeParams, 'updateOverlapp', overlapp);
-        } else {
-            newRoute = getRoute(routeParams, 'removeQuery', {'egenskap': ''});
-        }
+        const newRoute = makeRoute(newSettings);
+        browserHistory.push(newRoute);
     }
 
-    browserHistory.push(newRoute);
-}
 
-let EgenskapsFilterItem = ({routeParams, filter, egenskapstyperAll, overlapp}) => {
-
-    let vegobjekttype = 0;
+    let vegobjekttype = settings.vegobjekttype;
     if (overlapp) {
         vegobjekttype = overlapp;
-    } else {
-        vegobjekttype = routeParams.vegobjekttype;
-    }
+    } 
 
     let egenskapstyper = [];
     if (egenskapstyperAll[vegobjekttype]) {
@@ -68,6 +34,7 @@ let EgenskapsFilterItem = ({routeParams, filter, egenskapstyperAll, overlapp}) =
 
     let navn = filter.egenskapstype;
     let verdi = filter.verdi;
+
 
     egenskapstyper.forEach(egenskapstype => {
         if (egenskapstype.id === filter.egenskapstype) {
@@ -85,13 +52,13 @@ let EgenskapsFilterItem = ({routeParams, filter, egenskapstyperAll, overlapp}) =
     });
 
 
-
     return (
     	<li className="filters__filterlistitem">
             {navn} {filter.operator} {verdi}
             <button 
                 className="filters__removebutton"
-                onClick={() => { removeEgenskapsFilter(filter.filterString, routeParams, overlapp) }}>
+                data-filter={filter.filterString}
+                onClick={removeEgenskapsFilter}>
                 x
             </button>
     	</li>
@@ -103,6 +70,4 @@ const mapStateToProps = (state) => ({
     egenskapstyperAll: state.egenskapstyper.items
 })
 
-
-EgenskapsFilterItem = connect(mapStateToProps)(EgenskapsFilterItem);
-export default EgenskapsFilterItem;
+export default connect(mapStateToProps)(EgenskapsFilterItem);

@@ -2,26 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { getRoute } from './../../services/getRoute';
-import { getRow } from './../../services/routeParamsTools';
+import makeRoute from './../../services/makeRoute';
+import { removeAreaFilter } from './../../services/editSettings';
 
 
-const removeAreaFilter = (type, id, routeParams) => {
-    console.log(type + ' ' + id);
-    console.log(routeParams);
-    const newRoute = getRoute(routeParams, 'removeQuery', {[type]: id});
-    console.log(newRoute);
-    browserHistory.push(newRoute);
-}
+function AreaFilterItem ({type, id, areas, settings}) {
 
-let AreaFilterItem = ({type, id, routeParams, areas}) => {
+    const removeFilter = (e) => {
+        const newSettings = removeAreaFilter(settings, e.target.dataset.type, parseInt(e.target.dataset.area, 10));
+        const newRoute = makeRoute(newSettings);
+        browserHistory.push(newRoute);
+    }
 
-    const row = getRow(routeParams.row);
-
-    let warning = '';
-    if (['region', 'fylke', 'kommune'].indexOf(row) > -1) {
-        warning = '(!)';
-    } 
+    let showWarning = false;
+    if (['region', 'fylke', 'kommune'].indexOf(settings.row) > -1) {
+        showWarning = true;
+    }
 
     let navn = id; 
     if (areas[type].items) {
@@ -34,10 +30,15 @@ let AreaFilterItem = ({type, id, routeParams, areas}) => {
 
     return (
     	<li className="filters__filterlistitem">
-    		{navn} ({type}) {warning}
+    		{navn} ({type})
+
+            {showWarning && <span>(!)</span>}
+
             <button 
                 className="filters__removebutton"
-                onClick={() => { removeAreaFilter(type, id, routeParams) }}>x</button>
+                data-type={type}
+                data-area={id}
+                onClick={removeFilter}>x</button>
     	</li>
     )
 
@@ -48,5 +49,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-AreaFilterItem = connect(mapStateToProps)(AreaFilterItem);
-export default AreaFilterItem;
+export default connect(mapStateToProps)(AreaFilterItem);

@@ -1,5 +1,51 @@
 
 
+export function removeAreaFilter(settings, type, area) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings[type + 'Filter'] = newSettings[type + 'Filter'].filter(filter => {
+        return filter !== area;
+    })
+
+    if (newSettings[type + 'Filter'].length === 0) {
+        newSettings['has' + type.charAt(0).toUpperCase() + type.slice(1) + 'Filter'] = false;
+    }
+
+    return newSettings;
+}
+
+
+export function removeEgenskapFilter(settings, egenskapFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.egenskapFilter = newSettings.egenskapFilter.filter(filter => {
+        return filter.filterString !== egenskapFilter;
+    })
+
+    if (newSettings.egenskapFilter.length === 0) {
+        newSettings.hasEgenskapFilter = false;
+    }
+
+    return newSettings;
+}
+
+
+export function removeOverlappFilter(settings, overlappFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.overlappFilter = newSettings.overlappFilter.filter(filter => {
+        return filter.vegobjekttype !== overlappFilter;
+    })
+
+    if (newSettings.overlappFilter.length === 0) {
+        newSettings.hasOverlappFilter = false;
+    }
+
+    return newSettings;
+}
+
+
+
 export function removeColumnInterval(settings) {
     let newSettings = JSON.parse(JSON.stringify(settings));
 
@@ -20,6 +66,25 @@ export function removeColumnEgenskapstype(settings) {
 }
 
 
+export function removeOverlappEgenskapFilter(settings, overlapp, egenskapFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.overlappFilter.forEach((overlappFilter, index) => {
+        if (overlappFilter.vegobjekttype === overlapp) {
+            newSettings.overlappFilter[index].egenskapFilter = newSettings.overlappFilter[index].egenskapFilter.filter(filter => {
+                return filter.filterString !== egenskapFilter;
+            })
+
+            if (newSettings.overlappFilter[index].egenskapFilter.length === 0) {
+                newSettings.overlappFilter[index].hasEgenskapFilter = false;
+            }
+        }
+    })
+
+    return newSettings;
+}
+
+
 export function removeRowFilter(settings) {
     let newSettings = JSON.parse(JSON.stringify(settings));
 
@@ -35,6 +100,23 @@ export function removeSubrow(settings) {
 
     newSettings.hasSubrow = false;
     newSettings.subrow = '';
+
+    return newSettings;
+}
+
+
+
+
+export function removeVegreferanseFilter(settings, VegreferanseFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.vegreferanseFilter = newSettings.vegreferanseFilter.filter(filter => {
+        return filter !== VegreferanseFilter;
+    })
+
+    if (newSettings.vegreferanseFilter.length === 0) {
+        newSettings.hasVegreferanseFilter = false;
+    }
 
     return newSettings;
 }

@@ -2,56 +2,54 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { getRoute } from './../../services/getRoute';
-
 import EgenskapsFilterForm from './EgenskapsFilterForm';
 import EgenskapsFilterItem from './EgenskapsFilterItem';
 
+import makeRoute from './../../services/makeRoute';
+import { removeOverlappFilter } from './../../services/editSettings';
 
-function handleRemoveOverlappFilter (routeParams, id) {
-    const newRoute = getRoute(routeParams, 'removeQuery', {'overlapp': id});
-    browserHistory.push(newRoute);
-}
+import { getRoute } from './../../services/getRoute';
 
-function OverlappFilterItem ({routeParams, value, vegobjekttyper, filter}) {
+
+
+function OverlappFilterItem ({routeParams, vegobjekttyper, filter, settings}) {
+
+    const handleRemoveOverlappFilter = (e) => {
+
+        const newSettings = removeOverlappFilter(settings, parseInt(e.target.dataset.vegobjekttype, 10));
+        const newRoute = makeRoute(newSettings);
+
+        browserHistory.push(newRoute);
+    }
 
     const {
         egenskapFilter,
         vegobjekttype
     } = filter;
 
-    let navn = vegobjekttype;
 
+    let navn = vegobjekttype;
     if (vegobjekttyper[vegobjekttype]) {
         navn = vegobjekttyper[vegobjekttype].navn;
     }
-
-    let filters = [];
-
-    egenskapFilter.forEach(filter => {
-        filters.push(
-            <EgenskapsFilterItem
-                key={filter.filterString}
-                filter={filter}
-                routeParams={routeParams}
-                overlapp={vegobjekttype}
-            />
-        );
-    });
 
     return (
         <li key={vegobjekttype} className="filters__filterlistitem">
             {navn}
             <button 
                 className="filters__removebutton"
-                onClick={(e) => { handleRemoveOverlappFilter(routeParams, value) }}>x</button>
+                data-vegobjekttype={vegobjekttype}
+                onClick={handleRemoveOverlappFilter}>x</button>
+
             <ul>
-                {filters}
+                {egenskapFilter.map(filter => (
+                    <EgenskapsFilterItem key={filter.filterString} filter={filter} overlapp={vegobjekttype} settings={settings} />
+                ))}
             </ul>
-            <EgenskapsFilterForm overlapp={vegobjekttype} routeParams={routeParams} />
+
+            <EgenskapsFilterForm overlapp={vegobjekttype} routeParams={routeParams} settings={settings} />
         </li>
     )
-
 }
 
 const mapStateToProps = (state) => ({
