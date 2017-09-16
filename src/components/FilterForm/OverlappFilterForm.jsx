@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { getRoute } from './../../services/getRoute';
 
 
-class OverlappFilter extends Component {
+class OverlappFilterForm extends Component {
 
 
     constructor() {
@@ -240,5 +240,5 @@ const mapStateToProps = (state) => ({
 })
 
 
-OverlappFilter = connect(mapStateToProps)(OverlappFilter);
-export default OverlappFilter;
+OverlappFilterForm = connect(mapStateToProps)(OverlappFilterForm);
+export default OverlappFilterForm;

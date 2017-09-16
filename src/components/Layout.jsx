@@ -5,7 +5,7 @@ import ResultTableHeader from './ResultTable/ResultTableHeader';
 import ResultTableRows from './ResultTable/ResultTableRows';
 
 import EgenskapsFilterForm from './FilterForm/EgenskapsFilterForm';
-import OverlappFilter from './FilterForm/OverlappFilter';
+import OverlappFilterForm from './FilterForm/OverlappFilterForm';
 import FilterList from './FilterList/FilterList';
 
 import SelectResult from './Controls/SelectResult';
@@ -27,7 +27,7 @@ const Layout = ({routeParams}) => {
             <section className="setup">
                 <SelectVegobjekttype2 settings={settings} />
                 <EgenskapsFilterForm routeParams={routeParams} />
-                <OverlappFilter routeParams={routeParams} />
+                <OverlappFilterForm routeParams={routeParams} />
             </section>
             <section className="filters">
             	<FilterList routeParams={routeParams} settings={settings} />
