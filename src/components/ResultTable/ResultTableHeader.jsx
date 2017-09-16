@@ -52,7 +52,6 @@ class ResultTableHeader extends Component {
 
         const {
             columnValues,
-            routeParams,
             settings
         } = this.props;
 

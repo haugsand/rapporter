@@ -106,3 +106,11 @@ export function setRowFilter(settings, rowFilter) {
     return newSettings;
 }
 
+
+export function setVegobjekttype(settings, vegobjekttype) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.vegobjekttype = vegobjekttype;
+
+    return newSettings;
+}

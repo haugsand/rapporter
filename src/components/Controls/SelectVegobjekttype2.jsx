@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { getRoute } from './../../services/getRoute';
+
+import makeRoute from './../../services/makeRoute';
+import { removeColumnEgenskapstype, removeColumnInterval, setColumn, setVegobjekttype } from './../../services/editSettings';
+
 
 class SelectVegobjekttype2 extends Component {
 
@@ -16,15 +19,20 @@ class SelectVegobjekttype2 extends Component {
         }
     }
 
-    handleChangeVegobjekttype (id) {
+    handleChangeVegobjekttype = (id) => {
         this.getDefaultState();
 
-        let newRoute = getRoute(this.props.routeParams, 'vegobjekttype', id);
+        let newSettings = setVegobjekttype(this.props.settings, id);
+        newSettings = removeColumnEgenskapstype(newSettings);
+        newSettings = removeColumnInterval(newSettings);
+        newSettings = setColumn(newSettings, 'vegkategori');
+
+        const newRoute = makeRoute(newSettings);
         browserHistory.push(newRoute);
     }
 
-    setVegobjekttypeName (props) {
-        const id = props.routeParams.vegobjekttype;
+    setVegobjekttypeName = (props) => {
+        const id = props.settings.vegobjekttype;
 
         if (props.vegobjekttyper.hasOwnProperty(id)) {
             this.setState({
@@ -58,7 +66,7 @@ class SelectVegobjekttype2 extends Component {
     }
 
 
-    handleChangeQuery (query) {
+    handleChangeQuery = (query) => {
 
         let suggestions =  [];
         let selectedIndex = -1;

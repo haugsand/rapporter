@@ -25,7 +25,7 @@ const Layout = ({routeParams}) => {
     return (
         <div>
             <section className="setup">
-                <SelectVegobjekttype2 routeParams={routeParams} />
+                <SelectVegobjekttype2 settings={settings} />
                 <EgenskapsFilterForm routeParams={routeParams} />
                 <OverlappFilter routeParams={routeParams} />
             </section>
