@@ -4,9 +4,9 @@ import ResultTableCaption from './ResultTable/ResultTableCaption';
 import ResultTableHeader from './ResultTable/ResultTableHeader';
 import ResultTableRows from './ResultTable/ResultTableRows';
 
-import EgenskapsFilterForm from './Filters/EgenskapsFilterForm';
-import OverlappFilter from './Filters/OverlappFilter';
-import FilterList from './Filters/FilterList';
+import EgenskapsFilterForm from './FilterForm/EgenskapsFilterForm';
+import OverlappFilter from './FilterForm/OverlappFilter';
+import FilterList from './FilterList/FilterList';
 
 import SelectResult from './Controls/SelectResult';
 import SelectVegobjekttype2 from './Controls/SelectVegobjekttype2';
@@ -33,7 +33,7 @@ const Layout = ({routeParams}) => {
             	<FilterList routeParams={routeParams} settings={settings} />
             </section>
             <section className="tools">
-                <StartFetching routeParams={routeParams} />
+                <StartFetching settings={settings} />
                 <SelectResult settings={settings} />
             </section>
             <section className="report">

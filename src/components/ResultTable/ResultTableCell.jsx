@@ -6,9 +6,9 @@ function formatNumber (number) {
 	return number.toLocaleString();
 }
 
-function ResultTableCell ({parameters, result, resultParam}) {
+function ResultTableCell ({parameters, query, result, resultParam}) {
     return (
-        <td title={parameters}>
+        <td title={parameters} className="js-resultcell" data-query={query}>
         	{result && formatNumber(result[resultParam])}
         </td>
     );

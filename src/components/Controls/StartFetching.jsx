@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as thunks from './../../state/thunks';
-import { buildParameters } from './../../services/parameters';
+// import { buildParameters } from './../../services/parameters';
 
 
 class StartFetching extends Component {
 
 
-    startFetching () {
+    startFetching = () => {
 
+        /*
         let columnValues = this.props.columnValues;
         let rowValues = this.props.rowValues;
         let subrowValues = this.props.subrowValues;
@@ -66,14 +67,24 @@ class StartFetching extends Component {
 
         }
 
+        console.log(queries);
 
+        */
 
+        const resultcells = document.querySelectorAll('.js-resultcell');
 
-        this.props.fetchResultAll(vegobjekttype, queries);
+        const queries = [];
+
+        resultcells.forEach(cell => {
+            queries.push(cell.dataset.query);
+        })
+
+        this.props.fetchResultAll(this.props.settings.vegobjekttype, queries);
 
     }
 
     render() {
+
 
         let progress = 0;
         if (this.props.result.totalQueries !== 0) {
@@ -96,7 +107,7 @@ class StartFetching extends Component {
             return (
                 <button 
                     className="start-button"
-                    onClick={(e) => { this.startFetching() }} 
+                    onClick={this.startFetching} 
                     title={this.props.result.finishedQueries + ' / ' + this.props.result.totalQueries} 
                 >
                     Start rapportuttak

@@ -307,6 +307,8 @@ button:hover {
 }
 
 .tools {
+  align-items: center;
+  display: flex;
   margin: 3.2rem 6.4rem 6.4rem 6.4rem;
 }
 
