@@ -2,53 +2,80 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import IntervalInput from './IntervalInput';
-import { getRoute } from './../../services/getRoute';
+import SelectColumnInterval from './SelectColumnInterval';
+
+import makeRoute from './../../services/makeRoute';
+import { removeColumnInterval, removeColumnEgenskapstype, setColumn, setColumnEgenskapstype, setColumnInterval } from './../../services/editSettings';
 
 
-function SelectColumn({egenskapstyper, routeParams, settings}) {
+
+function SelectColumn({egenskapstyper, settings}) {
 
     const handleChangeColumn = (e) => {
-        let newRoute = getRoute(routeParams, 'column', e.target.value);
+        const newColumnArray = e.target.value.split(':');
+
+        let newSettings = setColumn(settings, newColumnArray[0]);
+        newSettings = removeColumnInterval(newSettings);
+        newSettings = removeColumnEgenskapstype(newSettings);
+
+        if (newColumnArray.length > 1) {
+            newSettings = setColumnEgenskapstype(newSettings, newColumnArray[1]);
+        }
+
+        const newRoute = makeRoute(newSettings);
         browserHistory.push(newRoute);
     }
 
-    const vegobjekttype = routeParams.vegobjekttype;
+
+    const changeColumnInterval = (columnInterval) => {
+
+        let newSettings = {};
+        if (columnInterval) {
+            newSettings = setColumnInterval(settings, columnInterval);
+        } else {
+            newSettings = removeColumnInterval(settings);
+        }
+
+        const newRoute = makeRoute(newSettings);
+        browserHistory.push(newRoute);
+    }
+
 
     let filteredEgenskapstyper = [];
-    if (egenskapstyper.items[routeParams.vegobjekttype]) {
-        filteredEgenskapstyper = egenskapstyper.items[vegobjekttype].filter(egenskapstype => {
+    if (egenskapstyper.items[settings.vegobjekttype]) {
+        filteredEgenskapstyper = egenskapstyper.items[settings.vegobjekttype].filter(egenskapstype => {
             return [2, 30, 31].indexOf(egenskapstype.datatype) > -1;
         });
     }
 
-    let intervalInput = '';
 
+    let showSelectColumnInterval = false;
     if (settings.hasColumnEgenskapstype) {
-
         filteredEgenskapstyper.forEach(item => {
             if (item.id === settings.columnEgenskapstype) {
                 if (item.datatype === 2) {
-
-                    intervalInput = <IntervalInput routeParams={routeParams} settings={settings} />;
-
+                    showSelectColumnInterval = true;
                 }
             }
         })
     }
 
+    let activeColumn = settings.column; 
+    if (settings.hasColumnEgenskapstype) {
+        activeColumn += ':' + settings.columnEgenskapstype;
+    }
+
     return (
         <div>
-            <select value={settings.column} onChange={handleChangeColumn}>
+            <select value={activeColumn} onChange={handleChangeColumn}>
                 <option value="vegkategori">Vegkategori</option>
                 {filteredEgenskapstyper.map(egenskapstype =>
                     <option key={egenskapstype.id} value={'egenskapstype:'+egenskapstype.id}>{egenskapstype.navn}</option>
                 )}
             </select>
-            {intervalInput}
+            {showSelectColumnInterval && <SelectColumnInterval settings={settings} changeColumnInterval={changeColumnInterval} />}
         </div>
     )
-
 }
 
 const mapStateToProps = (state) => ({

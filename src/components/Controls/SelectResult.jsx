@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import makeRoute from './../../services/makeRoute';
 import { setResult } from './../../services/editSettings';
 
+
 function SelectResult ({settings, vegobjekttyper}) {
 
     const handleChangeResult = (e) => {

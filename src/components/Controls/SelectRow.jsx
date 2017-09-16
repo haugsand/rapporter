@@ -1,11 +1,27 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { getRoute } from './../../services/getRoute';
 
-function SelectRow ({routeParams, settings}) {
+import makeRoute from './../../services/makeRoute';
+import { removeRowFilter, removeSubrow, setRow, setSubrow } from './../../services/editSettings';
+
+
+function SelectRow ({settings}) {
 
     const handleChangeRow = (e) => {
-        const newRoute = getRoute(routeParams, 'row', e.target.value);
+        const newRowArray = e.target.value.split('-');
+
+        let newSettings = removeSubrow(settings);
+
+        if (newRowArray[0] !== settings.row) {
+            newSettings = removeRowFilter(newSettings);
+            newSettings = setRow(newSettings, newRowArray[0]);
+        }
+
+        if (newRowArray.length > 1) {
+            newSettings = setSubrow(newSettings, newRowArray[1]);
+        }
+
+        const newRoute = makeRoute(newSettings);
         browserHistory.push(newRoute);
     }
 

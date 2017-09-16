@@ -19,7 +19,7 @@ function makeEgenskapFilterString(egenskapFilter) {
     Object.keys(egenskapFilterKeys).forEach(key => {
         egenskapFilterList.push('(' + egenskapFilterKeys[key].join(' OR ') + ')');
     });
-    
+
 
     return egenskapFilterList.join(' AND ');
 }
@@ -46,9 +46,9 @@ function makeOverlappFilterString(overlappFilter) {
 export default function makeRoute (settings) {
 
     const {
+        column,
         columnEgenskapstype,
         columnInterval,
-        columnType,
         egenskapFilter,
         fylkeFilter,
         hasColumnEgenskapstype,
@@ -74,7 +74,7 @@ export default function makeRoute (settings) {
     } = settings;
 
 
-    let columnString = columnType;
+    let columnString = column;
 
     if (hasColumnEgenskapstype) {
         columnString += ':' + columnEgenskapstype;

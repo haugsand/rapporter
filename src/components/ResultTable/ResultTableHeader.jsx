@@ -60,14 +60,7 @@ class ResultTableHeader extends Component {
         const colspan = columnValues.length + 1;
 
 
-        let removeRowFilterLink = '';
-        if (settings.hasRowFilter) {
-
-            const newSettings = removeRowFilter(settings);
-            const newRoute = makeRoute(newSettings);
-
-            removeRowFilterLink = <Link to={newRoute}>Vis alle</Link>;
-        }
+        const removeRowFilterLink = makeRoute(removeRowFilter(settings));
 
 
         let columnHeaders = [];
@@ -126,15 +119,15 @@ class ResultTableHeader extends Component {
             <thead>
                 <tr>
                     <th>
-                        {removeRowFilterLink}
+                        {settings.hasRowFilter && <Link to={removeRowFilterLink}>Vis alle</Link>}
                     </th>
                     <th colSpan={colspan}>
-                        <SelectColumn routeParams={routeParams} settings={settings} />
+                        <SelectColumn settings={settings} />
                     </th>
                 </tr>
                 <tr>
                     <th>
-                        <SelectRow routeParams={routeParams} settings={settings} />
+                        <SelectRow settings={settings} />
                     </th>
                     {columnHeaders}
                 </tr>

@@ -71,10 +71,9 @@ export default function getSettings (routeParams) {
     let settings = {};
 
     settings = {
-        column: column.split(';')[0],
+        column: column.split(':')[0],
         columnEgenskapstype: '',
-        columnInterval: '',
-        columnType: column.split(':')[0],
+        columnInterval: [],
         egenskapFilter: [],
         fylkeFilter: [],
         hasColumnEgenskapstype: false,
