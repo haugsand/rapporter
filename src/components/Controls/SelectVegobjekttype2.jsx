@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import makeRoute from './../../services/makeRoute';
-import { removeColumnEgenskapstype, removeColumnInterval, setColumn, setVegobjekttype } from './../../services/editSettings';
+import {makeRoute} from './../../services/makeRoute';
+import { removeAllEgenskapFilter, removeColumnEgenskapstype, removeColumnInterval, setColumn, setResult, setVegobjekttype } from './../../services/editSettings';
 
 
 class SelectVegobjekttype2 extends Component {
@@ -25,7 +25,15 @@ class SelectVegobjekttype2 extends Component {
         let newSettings = setVegobjekttype(this.props.settings, id);
         newSettings = removeColumnEgenskapstype(newSettings);
         newSettings = removeColumnInterval(newSettings);
+        newSettings = removeAllEgenskapFilter(newSettings);
         newSettings = setColumn(newSettings, 'vegkategori');
+        // Remove invalid overlappfilter
+
+        if (this.props.vegobjekttyper[id].stedfesting !== 'LINJE') {
+            newSettings = setResult(newSettings, 'antall');
+        }
+
+        console.log(this.props.vegobjekttyper[id].stedfesting);
 
         const newRoute = makeRoute(newSettings);
         browserHistory.push(newRoute);

@@ -1,5 +1,46 @@
 
 
+
+
+export function addAreaFilter(settings, type, area) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.hasFilter = true;
+    newSettings['has' + type.charAt(0).toUpperCase() + type.slice(1) + 'Filter'] = true;
+    newSettings[type + 'Filter'].push(area);
+
+    return newSettings;
+}
+
+
+export function addEgenskapFilter(settings, egenskapFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+    
+    newSettings.hasFilter = true;
+    newSettings.hasEgenskapFilter = true;
+    newSettings.egenskapFilter.push(egenskapFilter);
+
+    return newSettings;
+}
+
+
+
+
+export function addOverlappFilter(settings, overlappFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+    
+    newSettings.hasFilter = true;
+    newSettings.hasOverlappFilter = true;
+    newSettings.overlappFilter.push({
+        hasEgenskapFilter: false,
+        egenskapFilter: [],
+        vegobjekttype: overlappFilter
+    });
+
+    return newSettings;
+}
+
+
 export function removeAreaFilter(settings, type, area) {
     let newSettings = JSON.parse(JSON.stringify(settings));
 
@@ -10,6 +51,16 @@ export function removeAreaFilter(settings, type, area) {
     if (newSettings[type + 'Filter'].length === 0) {
         newSettings['has' + type.charAt(0).toUpperCase() + type.slice(1) + 'Filter'] = false;
     }
+
+    return newSettings;
+}
+
+
+export function removeAllEgenskapFilter(settings) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.egenskapFilter = [];
+    newSettings.hasEgenskapFilter = false;
 
     return newSettings;
 }
@@ -78,6 +129,21 @@ export function removeOverlappEgenskapFilter(settings, overlapp, egenskapFilter)
             if (newSettings.overlappFilter[index].egenskapFilter.length === 0) {
                 newSettings.overlappFilter[index].hasEgenskapFilter = false;
             }
+        }
+    })
+
+    return newSettings;
+}
+
+
+
+export function addOverlappEgenskapFilter(settings, overlapp, egenskapFilter) {
+    let newSettings = JSON.parse(JSON.stringify(settings));
+
+    newSettings.overlappFilter.forEach((overlappFilter, index) => {
+        if (overlappFilter.vegobjekttype === overlapp) {
+            newSettings.overlappFilter[index].hasEgenskapFilter = true;
+            newSettings.overlappFilter[index].egenskapFilter.push(egenskapFilter);
         }
     })
 

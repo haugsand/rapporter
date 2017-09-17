@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import SelectColumn from './../Controls/SelectColumn';
 import SelectRow from './../Controls/SelectRow';
 
-import makeRoute from './../../services/makeRoute';
+import {makeRoute} from './../../services/makeRoute';
 import { removeRowFilter } from './../../services/editSettings';
 import { sortColumn } from './../../services/sortValues';
 
@@ -25,7 +25,7 @@ class ResultTableHeader extends Component {
 
     handleSortColumn(columnValue, direction) {
 
-        sortColumn(this.props.routeParams, columnValue, direction);
+        sortColumn(this.props.routeParams, this.props.settings, columnValue, direction);
 
         if (direction === 'reset') {
 

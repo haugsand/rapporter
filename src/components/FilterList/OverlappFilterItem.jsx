@@ -5,11 +5,11 @@ import { browserHistory } from 'react-router';
 import EgenskapsFilterForm from './../FilterForm/EgenskapsFilterForm';
 import EgenskapsFilterItem from './EgenskapsFilterItem';
 
-import makeRoute from './../../services/makeRoute';
+import {makeRoute} from './../../services/makeRoute';
 import { removeOverlappFilter } from './../../services/editSettings';
 
 
-function OverlappFilterItem ({routeParams, vegobjekttyper, filter, settings}) {
+function OverlappFilterItem ({vegobjekttyper, filter, settings}) {
 
     const handleRemoveOverlappFilter = (e) => {
 
@@ -44,7 +44,7 @@ function OverlappFilterItem ({routeParams, vegobjekttyper, filter, settings}) {
                 ))}
             </ul>
 
-            <EgenskapsFilterForm overlapp={vegobjekttype} routeParams={routeParams} settings={settings} />
+            <EgenskapsFilterForm overlapp={vegobjekttype} settings={settings} />
         </li>
     )
 }

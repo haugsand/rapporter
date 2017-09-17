@@ -2,7 +2,7 @@ import { buildParametersAll } from './parameters';
 import store from './../state/store';
 import * as actions from './../state/actions';
 
-export function sortColumn(routeParams, columnValue, direction) {
+export function sortColumn(routeParams, settings, columnValue, direction) {
 
     let rowValues = JSON.parse(JSON.stringify(store.getState().rowValues.items));
     let subrowValues = JSON.parse(JSON.stringify(store.getState().subrowValues.items));
@@ -14,7 +14,7 @@ export function sortColumn(routeParams, columnValue, direction) {
         
         let result = 0;
         if (resultValues.hasOwnProperty(resultKey)) {
-            result = resultValues[resultKey][routeParams.result];
+            result = resultValues[resultKey][settings.result];
         }
 
         rowValues[index].result = result;
@@ -27,7 +27,7 @@ export function sortColumn(routeParams, columnValue, direction) {
 
                 let result = 0;
                 if (resultValues.hasOwnProperty(resultKey)) {
-                    result = resultValues[resultKey][routeParams.result];
+                    result = resultValues[resultKey][settings.result];
                 }
 
                 subrowValues[rowValue.nummer][subindex].result = result;

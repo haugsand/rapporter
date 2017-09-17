@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import SelectColumnInterval from './SelectColumnInterval';
 
-import makeRoute from './../../services/makeRoute';
+import {makeRoute} from './../../services/makeRoute';
 import { removeColumnInterval, removeColumnEgenskapstype, setColumn, setColumnEgenskapstype, setColumnInterval } from './../../services/editSettings';
 
 

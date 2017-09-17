@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { getRoute } from './../../services/getRoute';
-import { filterStringToList, makeFilterString } from './../../services/filterString';
-import { getOverlappFilterString, getEgenskapFilterString } from './../../services/routeParamsTools';
+import {makeRoute} from './../../services/makeRoute';
+import { addEgenskapFilter, addOverlappEgenskapFilter } from './../../services/editSettings';
+
 
 class EgenskapsFilterForm extends Component {
 
@@ -87,6 +87,7 @@ class EgenskapsFilterForm extends Component {
 
     handleAddFilter (verdi, operator) {
 
+
         let newValue = this.state.selectedVerdi;
         if (verdi) {
             newValue = verdi;
@@ -101,49 +102,26 @@ class EgenskapsFilterForm extends Component {
             newOperator = operator;
         }
 
-        let newFilter = {
-            filter: this.state.selectedEgenskapstype + newOperator + newValue,
+        const egenskapFilter = {
+            filterString: this.state.selectedEgenskapstype + newOperator + newValue,
             egenskapstype: this.state.selectedEgenskapstype,
             operator: newOperator,
             verdi: newValue
         };
 
+        // TODO: ikke la det være mulig å legge til eksisterende egenskapsfilter
 
-        let filterString = '';
+        let newSettings = {};
+
         if (this.props.overlapp) {
-            filterString = getOverlappFilterString(this.props.routeParams.query.overlapp, this.props.overlapp);
+            newSettings = addOverlappEgenskapFilter(this.props.settings, this.props.overlapp, egenskapFilter);
         } else {
-            filterString = getEgenskapFilterString(this.props.routeParams.query);
-        }
-        const activeFilters = filterStringToList(filterString);
-
-        let filterExists = false;
-
-        activeFilters.forEach(filter => {
-            if (filter.filter === newFilter.filter) {
-                filterExists = true;
-            }
-        });
-
-        if (!filterExists) {
-            activeFilters.push(newFilter)
+            newSettings = addEgenskapFilter(this.props.settings, egenskapFilter);
         }
 
-        let filter = makeFilterString(activeFilters);
+        const newRoute = makeRoute(newSettings);
 
-        let newRoute = '';
-        if (this.props.overlapp) {
-            newRoute = getRoute(this.props.routeParams, 'updateOverlapp', this.props.overlapp + '(' + filter + ')');
-        } else {
-            newRoute = getRoute(this.props.routeParams, 'addQuery', {'egenskap': '"' + filter + '"'});
-        }
-
-
-
-    
         browserHistory.push(newRoute);
-
-
 
 
         this.setState({
@@ -163,7 +141,7 @@ class EgenskapsFilterForm extends Component {
         if (this.props.overlapp) {
             vegobjekttype = this.props.overlapp;
         } else {
-            vegobjekttype = this.props.routeParams.vegobjekttype;
+            vegobjekttype = this.props.settings.vegobjekttype;
         }
 
         let egenskapstyper = [];

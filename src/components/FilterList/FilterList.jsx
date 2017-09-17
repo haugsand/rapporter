@@ -6,7 +6,7 @@ import AreaFilterItem from './AreaFilterItem';
 import VegreferanseFilterItem from './VegreferanseFilterItem';
 
 
-function FilterList ({routeParams, settings}) {
+function FilterList ({settings}) {
 
     const {
         egenskapFilter,
@@ -25,7 +25,7 @@ function FilterList ({routeParams, settings}) {
     });
 
     overlappFilter.forEach(filter => {
-        filters.push(<OverlappFilterItem key={filter.vegobjekttype} filter={filter} routeParams={routeParams} settings={settings} />);
+        filters.push(<OverlappFilterItem key={filter.vegobjekttype} filter={filter} settings={settings} />);
     });
 
     regionFilter.forEach(filter => {

@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import makeRoute from './../../services/makeRoute';
+import {makeRoute} from './../../services/makeRoute';
 import { removeAreaFilter } from './../../services/editSettings';
 
 
 function AreaFilterItem ({type, id, areas, settings}) {
 
     const removeFilter = (e) => {
-        const newSettings = removeAreaFilter(settings, e.target.dataset.type, parseInt(e.target.dataset.area, 10));
+        const newSettings = removeAreaFilter(settings, e.target.dataset.type, e.target.dataset.area);
         const newRoute = makeRoute(newSettings);
         browserHistory.push(newRoute);
     }

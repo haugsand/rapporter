@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { getRoute } from './../../services/getRoute';
+
+import {makeRoute} from './../../services/makeRoute';
+import { addAreaFilter, addOverlappFilter } from './../../services/editSettings';
 
 
 class OverlappFilterForm extends Component {
@@ -19,50 +21,23 @@ class OverlappFilterForm extends Component {
 
     addOverlappFilter (suggestion) {
 
-        const id = suggestion.id;
-
-
-        let filterExists = false;
-
-        let queries = this.props.routeParams.query;
-
-        // TODO: Støtt overlappfilter med intervall
-        if (queries.overlapp) {
-            if (queries.overlapp.split(',').indexOf(id+'') > -1) {
-                filterExists = true;
-            }
-        }
+        const newSettings = addOverlappFilter(this.props.settings, suggestion.id);
+        const newRoute = makeRoute(newSettings);
 
         this.getDefaultState();
 
-        if (!filterExists) {
-            let newRoute = getRoute(this.props.routeParams, 'addQuery', {'overlapp': id});
-            browserHistory.push(newRoute);
-        }
+        browserHistory.push(newRoute);
     }
 
 
     addAreaFilter (suggestion) {
 
-        const type = suggestion.areaType;
-        const id = suggestion.nummer;
-
-        let filterExists = false;
-
-        let queries = this.props.routeParams.query;
-
-        if (queries[type]) {
-            if (queries[type].split(',').indexOf(id+'') > -1) {
-                filterExists = true;
-            }
-        }
+        const newSettings = addAreaFilter(this.props.settings, suggestion.areaType, suggestion.nummer);
+        const newRoute = makeRoute(newSettings);
 
         this.getDefaultState();
 
-        if (!filterExists) {
-            let newRoute = getRoute(this.props.routeParams, 'addQuery', {[type]: id});
-            browserHistory.push(newRoute);
-        }
+        browserHistory.push(newRoute);
     }
 
 
@@ -120,7 +95,20 @@ class OverlappFilterForm extends Component {
 
             });
 
-            Object.keys(this.props.vegobjekttyper).forEach(id => {  
+            // TODO Ikke la det mulig å legge til eksisterende area filter
+
+
+            const existingFilters = this.props.settings.overlappFilter.map(filter => {
+                return filter.vegobjekttype;
+            });
+
+            const filteredKeys = Object.keys(this.props.vegobjekttyper).filter(id => {
+                return parseInt(id, 10) !== this.props.settings.vegobjekttype;
+            }).filter(id => {
+                return existingFilters.indexOf(parseInt(id, 10)) < 0;
+            })
+
+            filteredKeys.forEach(id => {  
                 if (this.props.vegobjekttyper[id].navn.toLowerCase().includes(query.toLowerCase())) {
                     this.props.vegobjekttyper[id].filterType = 'overlapp';
                     suggestions.push(this.props.vegobjekttyper[id]);

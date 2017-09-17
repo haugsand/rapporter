@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import makeRoute from './../../services/makeRoute';
+import {makeRoute} from './../../services/makeRoute';
 import { removeEgenskapFilter, removeOverlappEgenskapFilter } from './../../services/editSettings';
 
 

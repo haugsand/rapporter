@@ -13,7 +13,7 @@ import SelectVegobjekttype2 from './Controls/SelectVegobjekttype2';
 import StartFetching from './Controls/StartFetching';
 
 import getSettings from './../services/settings';
-import makeRoute from './../services/makeRoute';
+import {makeRoute} from './../services/makeRoute';
 
 const Layout = ({routeParams}) => {
 
@@ -26,11 +26,11 @@ const Layout = ({routeParams}) => {
         <div>
             <section className="setup">
                 <SelectVegobjekttype2 settings={settings} />
-                <EgenskapsFilterForm routeParams={routeParams} />
-                <OverlappFilterForm routeParams={routeParams} />
+                <EgenskapsFilterForm settings={settings} />
+                <OverlappFilterForm settings={settings} />
             </section>
             <section className="filters">
-            	<FilterList routeParams={routeParams} settings={settings} />
+            	<FilterList settings={settings} />
             </section>
             <section className="tools">
                 <StartFetching settings={settings} />

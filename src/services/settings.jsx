@@ -129,19 +129,19 @@ export default function getSettings (routeParams) {
 
     if (settings.hasRegionFilter) {
         settings.regionFilter = query.region.split(',').map(filter => {
-            return parseInt(filter, 10);
+            return filter;
         });
     }
 
     if (settings.hasFylkeFilter) {
         settings.fylkeFilter = query.fylke.split(',').map(filter => {
-            return parseInt(filter, 10);
+            return filter;
         });
     }
 
     if (settings.hasKommuneFilter) {
         settings.kommuneFilter = query.kommune.split(',').map(filter => {
-            return parseInt(filter, 10);
+            return filter;
         });
     }
 

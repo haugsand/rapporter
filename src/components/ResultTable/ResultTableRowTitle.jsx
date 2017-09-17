@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import makeRoute from './../../services/makeRoute';
+import {makeRoute} from './../../services/makeRoute';
 import { setRowFilter } from './../../services/editSettings';
 
 
