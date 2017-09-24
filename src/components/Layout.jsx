@@ -13,6 +13,8 @@ import SelectVegobjekttype2 from './Controls/SelectVegobjekttype2';
 import StartFetching from './Controls/StartFetching';
 import ExportTable from './Controls/ExportTable';
 
+import FormExample from './FormValidation/FormExample';
+
 
 const Layout = ({settings}) => {
 
@@ -20,6 +22,7 @@ const Layout = ({settings}) => {
 
     return (
         <div>
+            <FormExample fields={['fieldName', 'fieldDescription', 'fieldDeposit', 'fieldTotalAmount']} />
             <section className="setup">
                 <SelectVegobjekttype2 settings={settings} />
                 <EgenskapsFilterForm settings={settings} />
