@@ -25,6 +25,12 @@ function OverlappFilterItem ({vegobjekttyper, filter, settings}) {
     } = filter;
 
 
+    let showWarning = false;
+    if (['region', 'fylke', 'kommune'].indexOf(settings.row) > -1 || settings.hasRegionFilter || settings.hasFylkeFilter || settings.hasKommuneFilter) {
+        showWarning = true;
+    }
+
+
     let navn = vegobjekttype;
     if (vegobjekttyper[vegobjekttype]) {
         navn = vegobjekttyper[vegobjekttype].navn;
@@ -33,6 +39,8 @@ function OverlappFilterItem ({vegobjekttyper, filter, settings}) {
     return (
         <li key={vegobjekttype} className="filters__filterlistitem">
             {navn}
+            {showWarning && <span>(!)</span>}
+
             <button 
                 className="filters__removebutton"
                 data-vegobjekttype={vegobjekttype}

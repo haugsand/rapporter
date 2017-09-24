@@ -11,16 +11,12 @@ import FilterList from './FilterList/FilterList';
 import SelectResult from './Controls/SelectResult';
 import SelectVegobjekttype2 from './Controls/SelectVegobjekttype2';
 import StartFetching from './Controls/StartFetching';
+import ExportTable from './Controls/ExportTable';
 
-import getSettings from './../services/settings';
-import {makeRoute} from './../services/makeRoute';
 
-const Layout = ({routeParams}) => {
+const Layout = ({settings}) => {
 
-    const settings = getSettings(routeParams);
-    console.log(routeParams);
-    console.log(settings);
-    console.log(makeRoute(settings));
+
 
     return (
         <div>
@@ -35,12 +31,13 @@ const Layout = ({routeParams}) => {
             <section className="tools">
                 <StartFetching settings={settings} />
                 <SelectResult settings={settings} />
+                <ExportTable />
             </section>
-            <section className="report">
-                <table>
+            <section className="report" id="dataTableDiv">
+                <table id="dataTable">
                     <ResultTableCaption settings={settings} />
-                    <ResultTableHeader routeParams={routeParams} settings={settings} />
-                    <ResultTableRows routeParams={routeParams} settings={settings} />
+                    <ResultTableHeader settings={settings} />
+                    <ResultTableRows settings={settings} />
                 </table>
             </section>
         </div>

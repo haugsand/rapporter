@@ -1,8 +1,8 @@
-import { buildParametersAll } from './parameters';
+import { buildQuery } from './makeRoute';
 import store from './../state/store';
 import * as actions from './../state/actions';
 
-export function sortColumn(routeParams, settings, columnValue, direction) {
+export function sortColumn(settings, columnValue, direction) {
 
     let rowValues = JSON.parse(JSON.stringify(store.getState().rowValues.items));
     let subrowValues = JSON.parse(JSON.stringify(store.getState().subrowValues.items));
@@ -10,7 +10,8 @@ export function sortColumn(routeParams, settings, columnValue, direction) {
 
     rowValues.forEach((rowValue, index) => {
 
-        let resultKey = buildParametersAll(routeParams, rowValue.nummer, columnValue)
+        // let resultKey = buildParametersAll(routeParams, rowValue.nummer, columnValue)
+        let resultKey = settings.vegobjekttype + '?' + buildQuery(settings, rowValue.nummer, columnValue);
         
         let result = 0;
         if (resultValues.hasOwnProperty(resultKey)) {
@@ -23,7 +24,8 @@ export function sortColumn(routeParams, settings, columnValue, direction) {
 
             subrowValues[rowValue.nummer].forEach((subrowValue, subindex) => {
 
-                let resultKey = buildParametersAll(routeParams, subrowValue.nummer, columnValue, true);
+                // let resultKey = buildParametersAll(routeParams, subrowValue.nummer, columnValue, true);
+                let resultKey = settings.vegobjekttype + '?' + buildQuery(settings, subrowValue.nummer, columnValue, true);
 
                 let result = 0;
                 if (resultValues.hasOwnProperty(resultKey)) {

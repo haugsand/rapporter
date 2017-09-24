@@ -25,7 +25,7 @@ class ResultTableHeader extends Component {
 
     handleSortColumn(columnValue, direction) {
 
-        sortColumn(this.props.routeParams, this.props.settings, columnValue, direction);
+        sortColumn(this.props.settings, columnValue, direction);
 
         if (direction === 'reset') {
 
@@ -82,6 +82,7 @@ class ResultTableHeader extends Component {
                 <th 
                     onClick={(e) => { this.handleSortColumn(value.id, direction) }} 
                     key={index}
+                    style={{position: 'sticky', top: 0}}
                 >
                     {sortedLabel}
                     {value.navn}
@@ -107,6 +108,7 @@ class ResultTableHeader extends Component {
             <th 
                 onClick={(e) => { this.handleSortColumn('', directionSum) }} 
                 key='sum'
+                style={{position: 'sticky', top: 0}}
             >
                 {sortedLabelSum}
                 Sum

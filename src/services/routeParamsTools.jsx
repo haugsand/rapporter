@@ -113,7 +113,7 @@ export function getOverlappFilterString(routeParam, id) {
     overlappFilters.forEach(overlappFilter => {
         let vegobjekttype = overlappFilter.split('(')[0];
 
-        if (vegobjekttype == id) {
+        if (vegobjekttype === id) {
             if (overlappFilter.split('(').length > 1) {
                 overlappFilterString = overlappFilter.slice(vegobjekttype.length).slice(1, -1);
             }
